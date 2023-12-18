@@ -1,3 +1,8 @@
 .status {
   margin-bottom: 10px;
 }
+
+.board-row {
+  display: flex;
+  align-items: center;
+}
