@@ -1,0 +1,10 @@
+{
+  "winnerMessage": "Winner is",
+  "nextPlayer": "Next Player",
+  "rollbackMessagePrev": "If you return to step",
+  "rollbackMessageNext": ", subsequent operations will disappear.\tDo you still want to return?",
+  "initialState": "It's in its initial state. You can proceed with the game.",
+  "currentStage": "This is the current stage.",
+  "goToMove": "Go to move",
+  "goToGameStart": "Go to game start"
+}
