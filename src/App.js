@@ -6,6 +6,7 @@ function App() {
   const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
   const [xIsNext, setXIsNext] = useState(true);
   const [stepNumber, setStepNumber] = useState(0);
+  const [checked, setChecked] = useState('');
 
   const calculateWinner = squares => {
     const lines = [
@@ -42,12 +43,18 @@ function App() {
     const newHistory = history.slice(0, stepNumber + 1);
     const newCurrentHistory = newHistory[newHistory.length - 1];
     const newSquares = newCurrentHistory.squares.slice();
+    if (checked !== '') setChecked('');
     if (calculateWinner(newSquares) || newSquares[i]) return;
 
     newSquares[i] = xIsNext ? 'X' : 'O';
+
     setHistory([...newHistory, { squares: newSquares }]);
     setXIsNext(current => !current);
     setStepNumber(newHistory.length);
+  };
+
+  const handleChange = id => {
+    setChecked(id);
   };
 
   const jumpTo = step => {
@@ -55,13 +62,20 @@ function App() {
     setXIsNext(step % 2 === 0);
   };
 
-  const moves = history.map((step, move) => {
-    const desc = move ? `Go to move #${move}` : 'Go to game start';
+  const moves = history.map((_, step) => {
+    const desc = step ? `Go to move #${step}` : 'Go to game start';
     return (
-      <li key={move}>
-        <button className="move-button" onClick={() => jumpTo(move)}>
-          {desc}
-        </button>
+      <li key={step}>
+        <input
+          hidden
+          type="radio"
+          id={`stage${step}`}
+          name="radio-stage"
+          checked={checked === `stage${step}`}
+          onChange={() => handleChange(`stage${step}`)}
+        ></input>
+        <label htmlFor={`stage${step}`} onClick={() => jumpTo(step)}></label>
+        <button className="move-button">{desc}</button>
       </li>
     );
   });
@@ -70,7 +84,7 @@ function App() {
     <>
       <div className="game">
         <header className="app-header">
-          <h1>React Tic Tac Toe</h1>
+          <h1>Tic-Tac-Toe improve ver.</h1>
         </header>
         <div className="game-board">
           <Board squares={currentHistory.squares} onClick={i => handleClick(i)} />
